@@ -14,6 +14,8 @@ def compute_pe_truvada(indicator, tend, adh_pattern=None, time_step=0.02, ode_so
         indicator[1]: local PK
         indicator[2]: local dNTP level
         indicator[3]: exposure type RAI/RVI (doesn't matter in this function)
+        indicator[4]: exposure type 100% RAI ((doesn't matter in this function))
+
     tend: int
         end of running, day
     return: tuple
