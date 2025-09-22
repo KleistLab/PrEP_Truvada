@@ -1,8 +1,9 @@
-# Model-based predictions of protective HIV PrEP levels in cisgender women
+# Model-based predictions of protective HIV PrEP levels
 
-> This repo includes the code utilized for analyzing the prophylactic efficacy of Truvada on cisgender women, as detailed in the paper with the DOI: 10.21203/rs.3.rs-2772765/v1.
-> 
-> The codes available here allow for the reproduction of both the top-down and bottom-up analyses as presented in the paper.
+>This repository contains the code used to analyze the prophylactic efficacy of Truvada in cisgender women and men who have sex with men (MSM). It supports two analytical strategies: the top-down and bottom-up approaches, both described in detail in the associated paper (DOI: 10.21203/rs.3.rs-2772765/v1
+).
+>
+>The code provided enables full reproduction of the top-down and bottom-up analyses presented in that paper.
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![DOI](https://zenodo.org/badge/616463573.svg)](https://zenodo.org/badge/latestdoi/616463573)
 
@@ -50,10 +51,10 @@ conda activate prep
 This workflow uses the following dependencies:
 
 ```
-  - numpy
-  - scipy
-  - pandas
-  - torch
+  - numpy 1.20.2
+  - scipy 1.6.2
+  - pandas 1.2.3
+  - torch 1.11.0
 ```
 They can be installed automatically by creating the conda environment above. 
 
