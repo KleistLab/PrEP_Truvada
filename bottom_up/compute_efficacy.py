@@ -3,22 +3,22 @@
 import sys
 
 from utils import *
-from pe_truvada import *
+from compute_pe import *
 
 
 def process_pe_to_phi(indicator, pe_array): 
-   """
+    """
     Converts extinction probabilities into prophylactic efficacy estimates based on a given scenario.
 
     Parameters
     ----------
     indicator : list of bool
         A boolean list of 5 elements indicating the hypothesis/scenario:
-        - The first four elements correspond to different assumptions (see `compute_pe_truvada`).
+        - The first four elements correspond to different assumptions (see `compute_pe_tdf_ftc`).
         - The fifth element indicates whether the scenario assumes 100% RAI.
 
     pe_array : list of float
-        A list containing extinction probabilities for RAI and RVI returned by `compute_pe_truvada`.
+        A list containing extinction probabilities for RAI and RVI returned by `compute_pe_tdf_ftc`.
     """
     r_rvi = 9.1e-5  # success rate of rvi for inoculum size (see Supplementary text 2)
     r_rai = 3.7e-3  # success rate of rai
@@ -56,7 +56,7 @@ def main():
     adh = pd.read_csv('../data/dosing.csv', index_col=0).iloc[[7 - dose]].values
     indicators = [[1, i, j, 0] for i in range(2) for j in range(2)]
     for indicator in indicators[:4]:
-        pe_rai, pe_rvi = compute_pe_truvada(indicator, adh_pattern=adh, tend=tend)
+        pe_rai, pe_rvi = compute_pe_tdf_ftc(indicator, adh_pattern=adh, tend=tend)
         key = ''.join(map(str, indicator))
         phi = process_pe_to_phi(indicator, [pe_rvi.numpy()])
         np.save("phi_{}_d{}".format(key, dose), phi)

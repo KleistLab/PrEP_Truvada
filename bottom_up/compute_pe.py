@@ -6,9 +6,9 @@ from copy import deepcopy
 from Vectorized_clean.PEPV import *
 
 
-def compute_pe_truvada(indicator, tend, adh_pattern=None, time_step=0.02, ode_solver=euler):
+def compute_pe_tdf_ftc(indicator, tend, adh_pattern=None, time_step=0.02, ode_solver=euler):
     """
-    Compute the extinction probability of Truvada for different hypotheses.
+    Compute the extinction probability of TDF/FTC for different hypotheses.
     indicator: boolean array with 4 elems, hypothesis is indicated by this indicator array
         indicator[0]: adherence, if 0: adherence = 1, always 1 in this case
         indicator[1]: local PK
@@ -58,7 +58,7 @@ def process_one_dose(dose, indicator,  dosing_file='../data/dosing.csv'):
     save the results in npy.
     """
     adh = pd.read_csv(dosing_file, index_col=0).iloc[[7-dose]].values
-    pe_rai, pe_rvi = compute_pe_truvada(indicator, adh_pattern=adh, tend=110)
+    pe_rai, pe_rvi = compute_pe_tdf_ftc(indicator, adh_pattern=adh, tend=110)
     key = ''.join(map(str, indicator[:-1]))
     np.save("pe_rai_{}_d{}".format(key, dose), pe_rai.numpy())
     np.save("pe_rvi_{}_d{}".format(key, dose), pe_rvi.numpy())

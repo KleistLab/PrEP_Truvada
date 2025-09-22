@@ -1,6 +1,6 @@
 # Model-based predictions of protective HIV PrEP levels
 
->This repository contains the code used to analyze the prophylactic efficacy of Truvada in cisgender women and men who have sex with men (MSM). It supports two analytical strategies: the top-down and bottom-up approaches, both described in detail in the associated paper (DOI: 10.21203/rs.3.rs-2772765/v1
+>This repository contains the code used to analyze the prophylactic efficacy of TDF/FTC in cisgender women and men who have sex with men (MSM). It supports two analytical strategies: the top-down and bottom-up approaches, both described in detail in the associated paper (DOI: 10.21203/rs.3.rs-2772765/v1
 ).
 >
 >The code provided enables full reproduction of the top-down and bottom-up analyses presented in that paper.
@@ -93,12 +93,12 @@ Please choose one clinical study (Options: HPTN084, Partners, TDF2, VOICE, FEM):
 After choosing the clinical study, the testing will be performed for the corresponding study. The results will be printed and also saved in a npy file named identical to the clinical trial 'clinicalTrial.npy'
 
 ## Bottom-up
-The 'bottom_up' folder contains scripts and packages designed for the 'bottom-up' modeling detailed in the paper. This part's core goal is to compute the PrEP efficacy of Truvada under the hypothesized mechanism. 
+The 'bottom_up' folder contains scripts and packages designed for the 'bottom-up' modeling detailed in the paper. This part's core goal is to compute the PrEP efficacy of TDF/FTC under the hypothesized mechanism. 
 * Package 'Vectorized_clean': compute the prophylactic efficacy 
 in a vectorized way, i.e. this package can compute the PrEP efficacy trajectory of multiple 
 regimens for multiple individuals in a single run. For detailed usage of this package you can 
 check the examples in 'bottom_up/Vectorized_clean/example.ipynb'. 
-* pe_truvada.py: compute the extinction probability for Truvada on cis-gender women, considering different hypothetical scenarios and their combinations (as elucidated in the Results section). Here we use an example file (data/dosing.csv) containing 
+* compute_pe.py: compute the extinction probability for TDF/FTC on cis-gender women, considering different hypothetical scenarios and their combinations (as elucidated in the Results section). Here we use an example file (data/dosing.csv) containing 
 7 dosing regimens for 90 days long, i.e. once per week to 7 times per week. The pharmacokinetic parameters 
 of 1000 virtual individuals are used (parameters in data/pk). This computation can be slow since it computes the extinction probability profile for 1000 individuals. 
 * utils.py: contains helper functions for the computation of PrEP efficacy, e.g. function to calculate 
