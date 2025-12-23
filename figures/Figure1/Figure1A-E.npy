@@ -1,0 +1,21 @@
+trial, obs_time, incidence, Ninf, arm
+IPERGAY, placebo
+IPERGAY, intervention
+IPERGAY, undetected
+IPERGAY, detected
+iPrEX, placebo
+iPrEX,intervention
+iPrEX,undetected
+iPrEX,detected
+PURPOSE 2,placebo
+PURPOSE 2,intervention
+PURPOSE 2,undetected
+PURPOSE 2,detected
+HPTN 083,placebo
+HPTN 083,intervention
+HPTN 083,undetected
+HPTN 083,detected
+DISCOVER,placebo
+DISCOVER,intervention
+DISCOVER,undetected
+DISCOVER,detected
