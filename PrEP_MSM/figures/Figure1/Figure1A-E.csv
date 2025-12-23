@@ -1,0 +1,25 @@
+trial,obs_time,incidence,Ninf,arm
+IPERGAY,223,"[6.3, 3.3, 9.9]",,placebo
+IPERGAY,221,,2,intervention
+IPERGAY,"[31, 22, 42]","[9.4, 0.0, 28.7]",2,undetected
+IPERGAY,"[190, 177, 199]",,0,detected
+
+iPrEX,1619,"[4.0, 3.0, 4.9]",,placebo
+iPrEX,1628,,34,intervention
+iPrEX,"[798, 749, 847]","[4.0, 2.2, 6.1]",31,undetected
+iPrEX,"[830, 781, 879]",,3,detected
+
+PURPOSEII,,,,"placebo"
+PURPOSEII,828,,8,intervention
+PURPOSEII,"[174, 149, 199]","[4.0, 0.6, 9.1]",6,undetected
+PURPOSEII,"[654, 629, 679]",,2,detected
+
+HPTN083,,,,"placebo"
+HPTN083,3123,,39,intervention
+HPTN083,"[437, 406, 500]","[7.8, 4.5, 11.8]",33,undetected
+HPTN083,"[2685, 2655, 2717]",,6,detected
+
+DISCOVER,,,,"placebo"
+DISCOVER,4373,,11,intervention
+DISCOVER,"[175, 131, 219]","[6.2, 1.9, 11.9]",10,undetected
+DISCOVER,"[4198, 4154, 4242]",,1,detected
