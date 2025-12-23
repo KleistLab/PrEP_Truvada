@@ -14,21 +14,6 @@ def compute_def_integral(n_nodrug, py_nodrug, inf_nodrug, stepwidth = 1e-5):
     def fun(x):     # function to integrate
         return (power(x, inf_nodrug)) * (power(1 - py_nodrug*x/n_nodrug, n_nodrug-inf_nodrug))
     
-    # # I made the stepwidth smaller than usual so that the result can be used in 
-    # # the new approach
-    # stepwidth = mpf(str(1e-4))    
-    # steps = math.floor(n_nodrug / py_nodrug / stepwidth)
-    # res = list()
-    # for i in range(steps):
-    #     a = i*stepwidth
-    #     b = (i+1)*stepwidth
-    #     fa = fun(a)
-    #     fb = fun(b)
-    #     res.append((fa + fb) * stepwidth / 2)
-    # res = np.array(res)
-    # res = res / res.sum()
-    # return res
-      # define grid
     max_r = n_nodrug / py_nodrug
     steps = math.floor(max_r / stepwidth)
 
@@ -62,78 +47,35 @@ def compute_efficacy_distribution_bayesian_grid(
     When N_grid == 0, then uses simulation data
     """
     if flag == 'topdown':
-        # 1. Define consistent r-grid
-        #max_r = n_nodrug / py_nodrug                    # max feasible infection rate
-        #r_values = np.linspace(0, max_r, N_grid)        # consistent grid
         """
         new approach to compute the efficacy distribution using Bayesian inference
         """
-        # cut off the tail of rinf pdf (rinf super small probability, 
-        # as the value of rinf can cause problem when calculating r_values)
-        rinf_pdf = compute_def_integral(n_nodrug, py_nodrug, n_inf_nodrug)#[:3000]
+
+        rinf_pdf = compute_def_integral(n_nodrug, py_nodrug, n_inf_nodrug)
         res = np.zeros(101)
         
-        # averaging - matches the vector. rinf_pdf from 0 to 0.3...
         r_values = (np.arange(10000)/ 10000) / (n_nodrug / py_nodrug) 
         
-        for i in range(101): #could substitute this to run across possible ranges of simulted efficacy?
+        for i in range(101): 
             efficacy = 1 - i / 100
-            #probability of observing infections given a certain r_value????
-            prob = scipy.stats.binom.pmf(inf_drug, n_drug, r_values * efficacy) #for all possible infection rates
-            # how owuld it change if I were to bound it by exposure specific rinf?
-            # Distribution of infection rate included in pdf
-            res[i] = np.dot(prob, rinf_pdf) #rinf to scale by probability...
+            prob = scipy.stats.binom.pmf(inf_drug, n_drug, r_values * efficacy) 
+            res[i] = np.dot(prob, rinf_pdf) 
         
-        #return res / res.sum()
-        # # 2. Compute posterior over rinf on this grid
-        # # Must evaluate compute_def_integral ON THIS GRID
-        # rinf_pdf = compute_def_integral(
-        #     n_nodrug, py_nodrug, n_inf_nodrug)
-        
-        # rinf_pdf = np.asarray(rinf_pdf, dtype=float)
-        # rinf_pdf /= rinf_pdf.sum()                      # normalize
-
-        # # print(len(r_values), len(rinf_pdf))
-
-        # # 3. Compute posterior over efficacy
-        # res = np.zeros(101)
-
-        # for i in range(101):
-        #     efficacy = 1 - i / 100.0
-        #     p = r_values * efficacy
-
-        #     # Bound infection probabilities to [0,1]
-        #     p = np.clip(p, 0, 1)
-
-        #     # Likelihood P(data_drug | r, E)
-        #     prob = scipy.stats.binom.pmf(inf_drug, n_drug, p)
-
-        #     # Marginalize: integral P(data | r,E)*P(r) dr
-        #     res[i] = np.dot(prob, rinf_pdf)
-
-        # # 4. Normalize posterior over efficacy
 
     else: 
 
         efficacy = 1 - np.arange(101) / 100  # shape (101,)
 
         # Create a matrix of shape (M, 101) for rinf_null * efficacy
-        #print(n_drug, n_drug, n_nodrug, rinf_pdf_sim.shape, rinf_pdf_sim[:, None].shape, rinf_null.shape)
-        # print('inf shape',inf_num_sim.shape,efficacy.shape, rinf_null.shape)
+        
         prob_matrix = np.array([
             scipy.stats.binom.pmf(inf_num_sim[j], n_drug, rinf_null[j] * efficacy)
             for j in range(len(rinf_null))
-        ])  # shape (M, 101)
+        ])  
 
-        # Weight each row (sample) by its PDF value
-        # or no weights...
-        weighted_prob_matrix = prob_matrix #* rinf_pdf_sim[:, None]  # broadcast to (M, 101)
-        #print('removed important sampling')
-        # Sum over samples to get posterior over efficacy
-        res = weighted_prob_matrix.sum(axis=0)
         
-        # # Normalize
-        # res /= res.sum()
+        res = weighted_prob_matrix.sum(axis=0)
+
     res = np.array(res) * prior
 
     return res / res.sum()
@@ -184,9 +126,7 @@ def simulation_individual_infections(n_individuals, py_followup, r_infection_inc
     sim_tot_t = 0
     # Compute individual infection rates per simulation
     r_inf_matrix = r_infection_incidence[:, np.newaxis] * (1 - phi_matrix)  # (nsim, n_individuals)
-    # Dropout rate, assumed independent but competing with infection
     r_dropoff = 1 / py_followup - r_inf_matrix
-    #r_dropoff = 1 / py_followup - r_infection_incidence[:, np.newaxis]
 
     if np.any(r_dropoff < 0):
         raise ValueError("Negative dropout rate detected. Adjust py_followup or r_infection_incidence.")
@@ -260,7 +200,6 @@ def sample_phi_topdown(p_phi, N):
 
 
 def run_sim_topdown(trial, det_data, undet_data, phi_pdf, n_sim):
-    # print('TOP-DOWN running')
     '''
     num_phi_samples: N_individuals
     sample_phi: sample randomly from the distributions phi in phi_data (one per trial)
@@ -272,30 +211,26 @@ def run_sim_topdown(trial, det_data, undet_data, phi_pdf, n_sim):
     sample_phi = np.random.choice([i for i in range(101)], size=int(num_phi_samples), p=phi)
     num_simulations_to_run = 500 # Number of simulations to run for each sampled efficacy
     '''
-    #Check you are using the correct dataset
+    
     det_arm= det_data[trial]
     n_tot = det_arm['individuals'] #number of individuals in the study arm
     inf_num = det_arm['n_inf']
-    # print(inf_num, n_tot)
+    
 
-    # print(n_tot, inf_num, det_arm['py'], trial, n_sim, hypo)
+    
     # Sample from the incidence values using the probability distribution
     incidence_N = n_sim
-    #sample_incidence(undet_data, trial_name, sample_n, hypo)
+    
     sampled_incidence, _ = sample_incidence(undet_data, trial, incidence_N)
-    # print(sampled_incidence.shape)
-    # py = trial_det['avg_obs_time']*n_tot #total observation time
-    # n_inf = inf_num #number of observed infections
+    
     phi_samples = np.empty((n_sim, n_tot))
     for i in range(n_sim):
             phi_samples[i, :] = sample_phi_topdown(phi_pdf, n_tot)/100
             #print()
     
     py_avg = det_arm['avg_obs_time'] 
-    # print(phi_samples[0, 0:10], phi_samples.shape, sampled_incidence[0:10] * (1-phi_samples[0, 0:10]),(sampled_incidence[0:10] * (1-phi_samples[0, 0:10])) * (py_avg*n_tot))
     hypo = 'topdown'
     infection, inc_sim = simulation_individual_infections(n_tot, py_avg, sampled_incidence, phi_samples, n_sim, trial,hypo)
-    # print('vector shape',infection.shape)
     return infection
 
 def run_hypotheses(
