@@ -64,7 +64,7 @@ They can be installed automatically by creating the conda environment above.
 ## PrEP MSM
 
 Contains all codes to reproduce analysis in the manuscript "Pharmacological markers of HIV prevention for oral pre-exposure prophylaxis in MSM" by Sara Iannuzzi, Malin Müller, Yifan Yu, Lanxin Zhang, Craig W. Hendrix, Robert R.
-Bies and Max von Kleist (preprint; https://doi.org/10.21203/rs.3.rs-7537396/v1).
+Bies and Max von Kleist (https://doi.org/10.21203/rs.3.rs-7537396/v1).
 
 ## PrEP women
 
