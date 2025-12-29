@@ -74,7 +74,7 @@ def compute_efficacy_distribution_bayesian_grid(
         ])  
 
         
-        res = weighted_prob_matrix.sum(axis=0)
+        res = prob_matrix.sum(axis=0)
 
     res = np.array(res) * prior
 
