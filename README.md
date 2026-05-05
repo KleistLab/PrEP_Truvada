@@ -1,14 +1,14 @@
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19147627.svg)](https://doi.org/10.5281/zenodo.19147627)
+
 # Model-based predictions of protective HIV PrEP levels
 
 >This repository contains the code used to analyze the prophylactic efficacy of TDF/FTC in cisgender women and men who have sex with men (MSM). It supports two analytical strategies: the top-down and bottom-up approaches.
 >
-> For cisgender women: details described in the associated paper (DOI: 10.21203/rs.3.rs-2772765/v1)
+> For cisgender women: details described in the associated paper (DOI: https://doi.org/10.1038/s41591-023-02615-x)
 > 
-> For MSM: the top-down and bottom-up analysis are applied on MSM. A new top-down approach is described in the submitted manuscript.
+> For MSM: the top-down and bottom-up analysis are applied on MSM. A new top-down approach is described in the manuscript (DOI: https://doi.org/10.21203/rs.3.rs-7537396/v1).
 >
 >The code provided enables full reproduction of the top-down and bottom-up analyses, and the data contained can be used to reproduce the figures in the corresponding paper.
-
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![DOI](https://zenodo.org/badge/616463573.svg)](https://zenodo.org/badge/latestdoi/616463573)
 
 ## Table of Contents
 -   [System requirements](#system-requirements)
